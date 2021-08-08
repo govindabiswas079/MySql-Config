@@ -1,0 +1,85 @@
+///CREATE DATABASE TABLE
+
+[///SAMPLE
+
+Use EmployeeDB;
+
+CREATE TABLE `employee` (
+
+	`EmpID` int(11) NOT NULL AUTO_INCREMENT,
+
+	`Name` varchar(45) DEFAULT NULL,
+
+	`EmpCode` varchar(45) DEFAULT NULL,
+
+	`Salary` int(11) DEFAULT NULL,
+
+	PRIMARY KEY (`EmpID`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+]
+
+
+// AFTER CREATING TABLE SELECT THE SELECT ROW
+
+
+
+/// INSERT THE VALUE IN THE DATABASE
+[
+Use EmployeeDB;
+
+
+LOCK TABLES `employee` WRITE;
+
+INSERT INTO `employee` VALUES (1, 'Govind Biswas', 'EMP90', 25000),(2, 'Prem Kamal Biswas', 'EMP120', 15000),(3, 'Kapil Kamal Biswas', 'EMP90', 55000),(1, 'Rajiv Kamal Biswas', 'EMP340', 35000),(1, 'Govinda Kamal Biswas', 'EMP0703', 15000);
+
+UNLOCK TABLES;
+]
+
+
+
+/// STORED PROCEDURE
+
+[
+CREATE PROCEDURE `EmployeeAddOrEdit`(
+
+IN _EmpID INT,
+
+IN _Name varchar(45),
+
+IN _EmpCode varchar(45),
+
+IN _Salary int
+)
+
+BEGIN
+	
+	IF _EmpID = 0 THEN
+		INSERT INTO employee(Name,EmpCode,Salary)
+
+		VALUES (_Name,_EmpCode,_Salary);
+
+
+		SET _EmpID = LAST_INSERT_ID();
+
+	ELSE
+
+		UPDATE Employee
+
+		SET
+
+		Name = _Name,
+
+		EmpCode = _EmpCode,
+
+		Salary = _Salary
+
+		WHERE EmpID = _EmpID;
+
+	END IF;
+
+
+	SELECT _EmpID AS 'EmpID';
+
+END
+]
